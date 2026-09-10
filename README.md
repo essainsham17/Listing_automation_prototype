@@ -30,21 +30,41 @@ pip install -r requirements.txt
 
 On macOS or Linux, activate with `source venv/bin/activate`.
 
-Create `backend/.env` with the keys below. The file is git-ignored and must never be committed.
+## Environment variables
+
+Create a file named `.env` inside the `backend/` folder and add the keys below. The `.env` file is git-ignored: never commit it and never share its real values.
+
+| Key | Needed? | What to put in it |
+|---|---|---|
+| `EDENAI_API_KEY` | **Required** | Your Eden AI API key. The prototype uses Eden AI to read spec sheets and match them to the form. |
+| `LOCAL_PHOTOS_ROOT` | **Required** | Full path to the folder that holds the car spec sheets and photos. Auto-fill returns 503 if this folder does not exist. |
+| `EDENAI_BASE_URL` | Optional | Eden AI endpoint. Default: `https://api.edenai.run/v3` |
+| `EDENAI_MODEL` | Optional | Model used to read spec sheets. Default: `google/gemma-4-31b-it` |
+| `GROQ_API_KEY` | Optional | Groq API key, used for matching only when no Eden AI or Anthropic key is set. |
+| `TAVILY_API_KEY` | Optional | Tavily web-search API key, read by `app/web_search.py`. |
+| `LANGFUSE_PUBLIC_KEY` | Optional | Langfuse public key, for tracing AI calls. Tracing stays off unless both Langfuse keys are set. |
+| `LANGFUSE_SECRET_KEY` | Optional | Langfuse secret key. |
+| `LANGFUSE_HOST` | Optional | Langfuse server URL, for example `https://cloud.langfuse.com` |
+| `EXTRACTION_ENABLED` | Optional | `true` or `false`. `false` skips reading the spec sheet during auto-fill. Default: `true` |
+| `PHOTO_CLASSIFICATION_ENABLED` | Optional | `true` or `false`. `false` skips sorting photos into exterior and interior. Default: `true` |
+
+Example `backend/.env`, with placeholders to replace by your own values:
 
 ```
+EDENAI_API_KEY=your-eden-ai-api-key
+LOCAL_PHOTOS_ROOT=/path/to/spec-sheet-and-photo-library
+EDENAI_BASE_URL=https://api.edenai.run/v3
+EDENAI_MODEL=google/gemma-4-31b-it
 GROQ_API_KEY=
-LOCAL_PHOTOS_ROOT=
 TAVILY_API_KEY=
 LANGFUSE_PUBLIC_KEY=
 LANGFUSE_SECRET_KEY=
-LANGFUSE_HOST=
-PHOTO_CLASSIFICATION_ENABLED=
-EXTRACTION_ENABLED=
-EDENAI_API_KEY=
-EDENAI_BASE_URL=
-EDENAI_MODEL=
+LANGFUSE_HOST=https://cloud.langfuse.com
+EXTRACTION_ENABLED=true
+PHOTO_CLASSIFICATION_ENABLED=true
 ```
+
+Every other setting (timeouts, limits, other AI providers) has a working default in `backend/app/config.py`.
 
 ## Run
 
