@@ -1,0 +1,61 @@
+{
+  "specFields": [
+    {"id": "transmission", "label": "Transmission", "type": "select", "options": ["Automatic", "Manual", "CVT", "IVT"]},
+    {"id": "driveType", "label": "Drive Type", "type": "select", "options": ["FWD", "RWD", "AWD", "4WD"]},
+    {"id": "cylinders", "label": "Cylinders", "type": "select", "options": ["3", "4", "5", "6", "8", "10", "12", "Electric"]},
+    {"id": "fuelType", "label": "Fuel Type", "type": "select", "options": ["Petrol", "Diesel", "Hybrid", "Electric"]},
+    {"id": "doors", "label": "Doors", "type": "select", "options": ["2", "3", "4", "5"]},
+    {"id": "seats", "label": "Seats", "type": "select", "options": ["2", "4", "5", "6", "7", "8"]},
+    {"id": "bodyType", "label": "Body Type", "type": "select", "required": true, "options": ["Sedan", "SUV", "Coupe", "Hatchback", "Pickup", "Van"]},
+    {"id": "wheelSize", "label": "Wheel Size", "type": "select", "options": ["16\"", "17\"", "18\"", "19\"", "20\"", "21\"", "22\""]},
+    {"id": "interiorColor", "label": "Interior Color", "type": "select", "options": ["Black", "Beige", "Grey", "Brown", "White"]},
+    {"id": "color", "label": "Color", "type": "select", "options": ["White", "Black", "Silver", "Grey", "Red", "Blue"]},
+    {"id": "steeringSide", "label": "Steering Side", "type": "select", "options": ["Left Hand Drive", "Right Hand Drive"]},
+    {"id": "regionalSpec", "label": "Regional Specification", "type": "select", "options": ["GCC Specs", "American Specs", "European Specs", "Japanese Specs", "Chinese Specs"]},
+    {"id": "engineSize", "label": "Engine Size (Liters)", "type": "text", "placeholder": "Enter engine size"},
+    {"id": "horsepower", "label": "Horsepower", "type": "text", "placeholder": "Enter horsepower"}
+  ],
+  "featureGroups": {
+    "infotainment": [
+      "USB & Auxiliary Cable", "CD/DVD Player", "Bluetooth system", "Rear TV screens",
+      "Premium Sound System", "Rear Speakers", "Front Speakers", "Voice Command",
+      "Apple Car Play", "Android Auto", "Touch Screen"
+    ],
+    "comfort": [
+      "Navigation system", "Parking sensor front", "Additional Features", "Rear Power Outlet",
+      "Soft Close Doors", "Heated Side Mirrors", "Central Locking", "Drive Modes",
+      "Massaging seats", "Front Camera", "Rear AC Vents", "360 degree camera",
+      "Heads up display", "Auto Retractable Side Mirrors", "Remote Engine Start", "Rain Sensing Wipers",
+      "Steering Switches", "Power Windows", "Rear Defogger", "Air Purifier",
+      "Tyre pressure warning system", "Power locks", "Auto Brake Hold", "Ambient Lighting",
+      "Auto Sensor Trunk Opener", "Push Start", "Ventilated Seats", "Rear Camera",
+      "Parking sensor rear", "Self-steering parking", "Fridge", "Wireless Charger",
+      "Interior Lighting", "Power Trunk", "Power Steering", "Heated Seats", "Headlight On Reminder"
+    ],
+    "security": [
+      "Performance kit (tuned)", "4WD", "Auto High Beam Control", "Rear Fog Lamp",
+      "Anti-Theft Alarm System", "High Mount Stop Lamp", "Immobilizer", "Child Lock",
+      "Hill descent control", "Blind spot detection mirror", "Vehicle Stability Control",
+      "Speed Sensing Auto Door Lock", "ISOFIX Child Seat Anchors", "Front wheel drive",
+      "Adaptive cruise control", "Hill Start Assist Control", "ABS",
+      "Lane Keep Assist System (LKAS)", "Differential lock",
+      "Electronic Brake-Force Distribution (EBD)", "Airbags (front and side)",
+      "Traction Control", "Rear wheel drive", "Lane departure alert", "Parking assist",
+      "Brake Assist (BA)", "Autonomous Emergency Braking (AEB)", "All wheel drive"
+    ],
+    "exterior_and_controls": [
+      "Off-road kit", "Sunroof", "Winch", "Auto Adjustable Headlights", "Roof Rails",
+      "Xenon headlights", "Sport suspension", "Sport package", "Fog lights",
+      "Air suspension front & rear", "Side Mirrors with Indicators", "Rear Wiper",
+      "Rear Spoiler", "Roof rack", "Keyless go", "Convertible Top", "Panoramic Roof",
+      "DRLs", "Side Steps", "Moonroof", "LED headlights"
+    ],
+    "interior_feature": [
+      "Information Cluster", "AUX audio in", "Cruise control", "Power seats",
+      "Power Mirrors", "Air conditioning", "Power seats with memory", "Tuner/radio",
+      "Racing seats", "Glove Box", "Leather seats", "Climate control",
+      "Multiple off road option selector", "Rear Folding Seat", "Fabric Seats", "USB",
+      "Rear Seat Adjustment", "Paddle shifters"
+    ]
+  }
+}

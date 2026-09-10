@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!-- Car Inventory page that fetches all listings from /inventory and shows them as cards. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Inventory — Website Prototype</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .listing-note { color: var(--text-muted); font-size: 13px; margin-bottom: 20px; }
+  .listing-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .listing-card { background: #fff; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; position: relative; }
+  .listing-card--out-of-stock { opacity: 0.55; filter: grayscale(60%); }
+  .out-of-stock-badge {
+    position: absolute; top: 10px; right: 10px; background: #b3261e; color: #fff; font-size: 11px;
+    font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; padding: 4px 9px; border-radius: 4px; z-index: 1;
+  }
+  .listing-photo {
+    height: 150px; background: var(--accent-secondary); color: #fff; display: flex; align-items: center;
+    justify-content: center; font-size: 13px; text-align: center; padding: 10px; overflow: hidden;
+  }
+  .listing-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .listing-body { padding: 14px; }
+  .listing-stock-id {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; background: var(--bg-muted);
+    padding: 2px 7px; border-radius: 4px; color: var(--text-muted); display: inline-block; margin-bottom: 6px;
+  }
+  .listing-title { font-weight: 700; font-size: 15px; margin: 0 0 4px; }
+  .listing-price { color: var(--brand-900); font-weight: 700; margin: 6px 0; }
+  .listing-specs { font-size: 12.5px; color: #444; display: flex; flex-wrap: wrap; gap: 6px; }
+  .listing-spec-chip { background: var(--bg-muted); border-radius: 4px; padding: 2px 8px; }
+  .listing-empty { color: var(--text-muted); }
+  .view-all-photos { background: none; border: none; color: var(--brand-900); font-size: 12px; font-weight: 700; cursor: pointer; padding: 8px 14px 0; }
+  .listing-gallery { display: none; grid-template-columns: repeat(3, 1fr); gap: 4px; padding: 8px 14px 0; }
+  .listing-gallery.expanded { display: grid; }
+  .listing-gallery img { width: 100%; height: 60px; object-fit: cover; border-radius: 4px; }
+</style>
+</head>
+<body>
+<div class="shell2">
+  <aside class="sidebar2">
+    <div class="sidebar2-logo">LEGEND<span>MOTORS</span></div>
+    <nav class="sidebar2-nav">
+      <div class="sidebar2-item">Dashboard</div>
+      <a class="sidebar2-item sidebar2-item--live" href="index.html">Manage Car Details</a>
+      <div class="sidebar2-item">Manage Car Features</div>
+      <div class="sidebar2-item">Manage Car Specification</div>
+      <div class="sidebar2-item">Manage Car Tags</div>
+      <a class="sidebar2-item sidebar2-item--live sidebar2-item--active" href="website.html">Car Inventory</a>
+      <a class="sidebar2-item sidebar2-item--live" href="stock-sync.html">Stock Sync</a>
+      <a class="sidebar2-item sidebar2-item--live" href="marketing-tracker.html">Marketing Tracker</a>
+      <div class="sidebar2-item">Media Library</div>
+    </nav>
+    <div class="sidebar2-note">
+      Prototype build — replicates the Add Car Details wizard with the AI auto-fill step from the project proposal. Greyed items aren't wired up.
+    </div>
+  </aside>
+
+  <main class="main2">
+    <div class="topbar2">
+      <div class="search"><input type="text" placeholder="Search…" /></div>
+      <div class="pill-badge">AI Prototype</div>
+    </div>
+
+    <h1 class="page-title">Vehicle Inventory</h1>
+    <p class="listing-note">Reads directly from GET /inventory — every listing shown; stock-out ones (status "hidden") are flagged Out of Stock rather than removed.</p>
+    <div class="listing-grid" id="grid"></div>
+  </main>
+</div>
+
+<script>
+// Returns a listing's exterior and interior photo URLs, skipping any 'placeholder:' entries.
+function realPhotoUrls(photos) {
+  const all = [...(photos?.exterior || []), ...(photos?.interior || [])];
+  return all.filter((url) => typeof url === "string" && !url.startsWith("placeholder:"));
+}
+
+// Builds the HTML card for one listing with photo, gallery, price, spec chips and out-of-stock badge.
+function renderCard(l) {
+  const specs = l.specifications || {};
+  const chips = ["transmission", "fuelType", "seats"]
+    .filter((k) => specs[k])
+    .map((k) => `<span class="listing-spec-chip">${specs[k]}</span>`)
+    .join("");
+  const photoUrls = realPhotoUrls(l.photos);
+  const outOfStock = l.status === "hidden";
+
+  const photoBlock = photoUrls.length
+    ? `<img src="${photoUrls[0]}" alt="${l.brand} ${l.model}" />`
+    : `${l.brand} ${l.model}<br/>${l.trim} · ${l.year}<br/><small>(no photo yet)</small>`;
+
+  const galleryBlock = photoUrls.length > 1
+    ? `<button class="view-all-photos" type="button" onclick="toggleGallery(this)">View all ${photoUrls.length} photos</button>
+       <div class="listing-gallery">${photoUrls.map((u) => `<img src="${u}" alt="" />`).join("")}</div>`
+    : "";
+
+  return `
+    <div class="listing-card ${outOfStock ? "listing-card--out-of-stock" : ""}">
+      ${outOfStock ? '<span class="out-of-stock-badge">Out of Stock</span>' : ""}
+      <div class="listing-photo">${photoBlock}</div>
+      <div class="listing-body">
+        <span class="listing-stock-id">${l.model_number}</span>
+        <p class="listing-title">${l.year} ${l.brand} ${l.model} ${l.trim}</p>
+        <p class="listing-price">AED ${Number(l.price_aed).toLocaleString()}</p>
+        <div class="listing-specs">${chips}</div>
+      </div>
+      ${galleryBlock}
+    </div>`;
+}
+
+// Shows or hides the photo gallery after the clicked button and updates the button label to match.
+function toggleGallery(btn) {
+  const gallery = btn.nextElementSibling;
+  const expanding = !gallery.classList.contains("expanded");
+  gallery.classList.toggle("expanded", expanding);
+  btn.textContent = expanding ? "Hide photos" : btn.textContent.replace("Hide photos", `View all ${gallery.children.length} photos`);
+}
+
+// Fetches /inventory and fills the grid with listing cards, or a No listings message when empty.
+async function load() {
+  const res = await fetch("/inventory");
+  const listings = await res.json();
+  const grid = document.getElementById("grid");
+
+  if (!listings.length) {
+    grid.innerHTML = '<p class="listing-empty">No listings.</p>';
+    return;
+  }
+
+  grid.innerHTML = listings.map(renderCard).join("");
+}
+load().catch((e) => {
+  console.error("Couldn't load /inventory:", e);
+  document.getElementById("grid").innerHTML =
+    '<p class="listing-empty">Couldn\'t load inventory — check the server console and that the app is running.</p>';
+});
+</script>
+</body>
+</html>

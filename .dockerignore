@@ -1,0 +1,10 @@
+# Files kept out of the Docker build context, so secrets and local caches never enter the image.
+.git
+**/.env
+**/.env.*
+**/venv/
+**/.venv/
+**/__pycache__/
+**/*.pyc
+**/.pytest_cache/
+.claude/

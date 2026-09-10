@@ -1,0 +1,522 @@
+{
+  "uploaded_at": "2026-09-10T11:33:05.744729+00:00",
+  "excel_filename": "original excel samples 2.xlsx",
+  "new": [
+    {
+      "model_number": "TOY-HLX-I05HS-PV-2.7-MT-SWH-RED-26",
+      "product_description": "TOYOTA-HILUX-I05HS-PV-2.7-MT-SUPER WHITE-RED-26",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 130000.0,
+      "available": null,
+      "exterior_color": "SUPER WHITE",
+      "interior_color": "RED"
+    },
+    {
+      "model_number": "TOY-HIACE-HR-DV-2.8-MT-WHT-DGY-26",
+      "product_description": "TOYOTA-HIACE-HR-DV-2.8-MT-WHITE-DARK GREY-26",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 159000.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "DARK GREY"
+    },
+    {
+      "model_number": "TOY-COAST-23STR-DV-4.0-MT-WHT-GRY-25",
+      "product_description": "TOYOTA-COASTER-23 SEATER-DV-4.0-MT-WHITE-GREY-25",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2025,
+      "price_aed": 225000.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "GREY"
+    },
+    {
+      "model_number": "CHTC-C4L-LG-PV-2.3-MT-WHT-GRY-23",
+      "product_description": "CHTC-C4 LOGISTICS-LOGISTIC-PETROL-2.3-MT-WHITE-GREY-2023",
+      "brand": "Chtc",
+      "model": "",
+      "trim": "",
+      "year": 2023,
+      "price_aed": 73000.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "GREY"
+    },
+    {
+      "model_number": "GW-GWM WINGLE 5-W 5 4X2 LUX-DV-2.0-MT-TWHT-BLK-26",
+      "product_description": "GREATWALL-GWM WINGLE 5-WINGLE 5 4X2 LUXURY-DV-2.0-MT-TITANIUM WHITE-BLACK-26",
+      "brand": "Greatwall",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 46000.0,
+      "available": null,
+      "exterior_color": "TITANIUM WHITE",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "GW-GWM WINGLE 7-W 7 4X2 STD-DV-2.0-MT-TWHT-BLK-26",
+      "product_description": "GREATWALL-GWM WINGLE 7-WINGLE 7 4X2 STANDARD-DV-2.0-MT-TITANIUM WHITE-BLACK-26",
+      "brand": "Greatwall",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 47000.0,
+      "available": null,
+      "exterior_color": "TITANIUM WHITE",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "GW-GWM WINGLE 7-W 7 4X4 LUX-DV-2.0-MT-TWHT-BLK-26",
+      "product_description": "GREATWALL-GWM WINGLE 7-WINGLE 7 4X4 LUXURY-DV-2.0-MT-TITANIUM WHITE-BLACK-26",
+      "brand": "Greatwall",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 53000.0,
+      "available": null,
+      "exterior_color": "TITANIUM WHITE",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "MG-ZS-STD-PV-1.5-AT-WHT-BLK-22",
+      "product_description": "MG-ZS-STANDARD-PV-1.5-AT-WHITE-BLACK-22",
+      "brand": "Mg",
+      "model": "",
+      "trim": "",
+      "year": 2022,
+      "price_aed": 26999.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "TOY-CC-EHYB-HEV-2.0-AT-WHT-BLK-25",
+      "product_description": "TOYOTA-COROLLA CROSS-ELITE HYBRID-HEV-2.0-AT-WHITE-BLACK-25",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2025,
+      "price_aed": 67000.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "TOY-CAM-CLEN-PV-2.5-AT-BLK-BLK-26",
+      "product_description": "TOYOTA-CAMRY-CLEN-PV-2.5-AT-BLACK-BLACK-26",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 112000.0,
+      "available": null,
+      "exterior_color": "BLACK",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "BAW-212-ADV-PV-2.0-AT-BLK-BLK-26",
+      "product_description": "BAW -212-ADVENTURER-PV-2.0-AT-BLACK-BLACK-2026",
+      "brand": "Baw",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 115000.0,
+      "available": null,
+      "exterior_color": "BLACK",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "TOY-LC76 HT-H76MW-DV-2.8-MT-WHT-SDTAN-25",
+      "product_description": "TOYOTA-LC76 HARDTOP-H76MW-DV-2.8-MT-WHITE-SADLLE TAN-25",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2025,
+      "price_aed": 198000.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "SADLLE TAN"
+    },
+    {
+      "model_number": "GLY-EMGRAND-GS-PV-1.5-AT-WHT-GRY-24",
+      "product_description": "GEELY-EMGRAND-GS-PV-1.5-AT-WHITE-GREY-24",
+      "brand": "Geely",
+      "model": "",
+      "trim": "",
+      "year": 2024,
+      "price_aed": 39999.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "GREY"
+    },
+    {
+      "model_number": "TOY-COAST-22STR-DV-2.8-AT-WHT-GRY-25",
+      "product_description": "TOYOTA-COASTER-22 SEATER-DV-2.8-AT-WHITE-GREY-25",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2025,
+      "price_aed": 204000.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "GREY"
+    },
+    {
+      "model_number": "MG-RX5-LX-PV-2-AT-BLK-BK-RD-23",
+      "product_description": "MG-RX5-LUXURY-PETROL-2-AT-BLACK-BLACK-RED-2023",
+      "brand": "Mg",
+      "model": "",
+      "trim": "",
+      "year": 2023,
+      "price_aed": 52000.0,
+      "available": null,
+      "exterior_color": "BLACK",
+      "interior_color": "BLACK-RED"
+    },
+    {
+      "model_number": "GLY-C12E-CB-EV-0-AT-BLU-BLK-22",
+      "product_description": "GEELY-C12E CITY BUS-CITY BUS-EV-0-AT-BLUE-BLACK-2022",
+      "brand": "Geely",
+      "model": "",
+      "trim": "",
+      "year": 2022,
+      "price_aed": 1220000.0,
+      "available": null,
+      "exterior_color": "BLUE",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "HIP-X-FG-EV-0-AT-DGY-WHT-22",
+      "product_description": "HIPHI-X-FLAGSHIP-EV-0-AT-DARK GREY-WHITE-2022",
+      "brand": "Hiphi",
+      "model": "",
+      "trim": "",
+      "year": 2022,
+      "price_aed": 270000.0,
+      "available": null,
+      "exterior_color": "DARK GREY",
+      "interior_color": "WHITE"
+    },
+    {
+      "model_number": "TOY-COAST-30STR-DV-4.0-MT-WHT-GRY-26",
+      "product_description": "TOYOTA-COASTER-30 SEATER-DV-4.0-MT-WHITE-GREY-26",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 229000.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "GREY"
+    },
+    {
+      "model_number": "TOY-YRS-E-PV-1.5-AT-WHT-BGE-23",
+      "product_description": "TOYOTA-YARIS-E-PV-1.5-AT-WHITE-BEIGE-23",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2023,
+      "price_aed": 44499.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "BEIGE"
+    },
+    {
+      "model_number": "GLY-GEELY-FARIZON -SPR VAN-9STR-EV-0-AT-WHT-BLK-25",
+      "product_description": "GEELY-GEELY-FARIZON -SUPER VAN-83kwh 9STR-EV-0-AT-WHITE-BLACK-25",
+      "brand": "Geely",
+      "model": "",
+      "trim": "",
+      "year": 2025,
+      "price_aed": 108000.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "GLY-GEELY-FARIZON -SPR VAN-9STR-EV-0-AT-BLK-BLK-25",
+      "product_description": "GEELY-GEELY-FARIZON -SUPER VAN-83kwh 9STR-EV-0-AT-BLACK-BLACK-25",
+      "brand": "Geely",
+      "model": "",
+      "trim": "",
+      "year": 2025,
+      "price_aed": 108000.0,
+      "available": null,
+      "exterior_color": "BLACK",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "BAW-212-ADV-PV-2.0-AT-GRY-BRN-26",
+      "product_description": "BAW -212-ADVENTURER-PV-2.0-AT-GREY-BROWN-2026",
+      "brand": "Baw",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 115000.0,
+      "available": null,
+      "exterior_color": "GREY",
+      "interior_color": "BROWN"
+    },
+    {
+      "model_number": "Farizon-Farizon -SUP VAN-FARIZON SUP VAN-EV-0-AT-WHT-BK&BR-25",
+      "product_description": "Farizon -Farizon -SUPER VAN-FARIZON -SUPER VAN-EV-0-AT-WHITE-BLACK-25",
+      "brand": "Farizon",
+      "model": "",
+      "trim": "",
+      "year": 2025,
+      "price_aed": 123000.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "TOY-HLX-GRS-PV-4.0-AT-ABK-BLK-26",
+      "product_description": "TOYOTA-HILUX-GR-SPORT-PV-4.0-AT-ATTITUDE BLACK-BLACK-26",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 175000.0,
+      "available": null,
+      "exterior_color": "ATTITUDE BLACK",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "KAI-X3PL-LX-PV-1.5-AT-PNDE-CRBK-26",
+      "product_description": "KAIYI-X3 1.5 PRO LUXURY-LUXURY-PV-1.5-AT-PANDA EDITION-CARBON BLACK-2026",
+      "brand": "Kaiyi",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 37100.0,
+      "available": null,
+      "exterior_color": "PANDA EDITION",
+      "interior_color": "CARBON BLACK"
+    },
+    {
+      "model_number": "KAI-X3PL-LX-PV-1.5-AT-ASGY-SKBG-26",
+      "product_description": "KAIYI-X3 1.5 PRO LUXURY-LUXURY-PV-1.5-AT-ASH GRAY-SILK BEIGE-2026",
+      "brand": "Kaiyi",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 37100.0,
+      "available": null,
+      "exterior_color": "ASH GRAY",
+      "interior_color": "SILK BEIGE"
+    },
+    {
+      "model_number": "TOY-HLX-GRS-PV-4.0-AT-PWP-BLK-25",
+      "product_description": "TOYOTA-HILUX-GR-SPORT-PV-4.0-AT-PLATINUM WHITE PEARL-BLACK-25",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2025,
+      "price_aed": 172000.0,
+      "available": null,
+      "exterior_color": "PLATINUM WHITE PEARL",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "KAI-X3PL-LX-PV-1.5-AT-ASGY-CRBK-26",
+      "product_description": "KAIYI-X3 1.5 PRO LUXURY-LUXURY-PV-1.5-AT-ASH GRAY-CARBON BLACK-2026",
+      "brand": "Kaiyi",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 37100.0,
+      "available": null,
+      "exterior_color": "ASH GRAY",
+      "interior_color": "CARBON BLACK"
+    },
+    {
+      "model_number": "MG-ZS-STD-PV-1.5-AT-GRY-BLK-22",
+      "product_description": "MG-ZS-STANDARD-PV-1.5-AT-GREY-BLACK-22",
+      "brand": "Mg",
+      "model": "",
+      "trim": "",
+      "year": 2022,
+      "price_aed": 29999.0,
+      "available": null,
+      "exterior_color": "GREY",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "NIS-XTRAIL-S 2WD-PV-2.5-AT-WHT-BGE-26",
+      "product_description": "NISSAN-XTRAIL-S 2WD-PV-2.5-AT-WHITE-BEIGE-26",
+      "brand": "Nissan",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 84799.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "BEIGE"
+    },
+    {
+      "model_number": "TOY-HIACE-HR-DV-2.8-MT-WHT-GRY-26",
+      "product_description": "TOYOTA-HIACE-HR-DV-2.8-MT-WHITE-GREY-26",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 170000.0,
+      "available": null,
+      "exterior_color": "WHITE",
+      "interior_color": "GREY"
+    },
+    {
+      "model_number": "TOY-HIACE-SR ALPHA-PV-3.5-AT-BLK-BRN-25",
+      "product_description": "TOYOTA-HIACE-STD ROOF ALPHA-PV-3.5-AT-BLACK-BROWN-25",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2025,
+      "price_aed": 368000.0,
+      "available": null,
+      "exterior_color": "BLACK",
+      "interior_color": "BROWN"
+    },
+    {
+      "model_number": "TOY-HIACE-HR ALPHA-PV-3.5-AT-BLK-BRN-25",
+      "product_description": "TOYOTA-HIACE-HIGH ROOF ALPHA-PV-3.5-AT-BLACK-BROWN-25",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2025,
+      "price_aed": 420000.0,
+      "available": null,
+      "exterior_color": "BLACK",
+      "interior_color": "BROWN"
+    },
+    {
+      "model_number": "GAC-GAC M8-GX-PV-2.0-AT-BLK-RD&BK-26",
+      "product_description": "GAC-GAC M8-GX-PV-2.0-AT-BLACK-RED&BLACK-26",
+      "brand": "Gac",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 139000.0,
+      "available": null,
+      "exterior_color": "BLACK",
+      "interior_color": "RED&BLACK"
+    },
+    {
+      "model_number": "GAC-GS3-EMZOOM-PV-1.5-AT-IVR WHT-BL&BK-26",
+      "product_description": "GAC-GS3 -EMZOOM-PV-1.5-AT-IVORY WHITE -BLUE & BLACK-26",
+      "brand": "Gac",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 49999.0,
+      "available": null,
+      "exterior_color": "IVORY WHITE",
+      "interior_color": "BLUE & BLACK"
+    },
+    {
+      "model_number": "TOY-CRW-HEV-HEV-2.5-AT-PWHP-BLK-26",
+      "product_description": "TOYOTA-CROWN-HEV-HEV-2.5-AT-PRECIOUS WHITE PEARL-BLACK-26",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 135000.0,
+      "available": null,
+      "exterior_color": "PRECIOUS WHITE PEARL",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "MB-V250-VC-PV-2-AT-BLK-BLK-23",
+      "product_description": "MERCEDES BENZ-V250-VCLASS-PV-2-AT-BLACK-BLACK-23",
+      "brand": "Mercedes Benz",
+      "model": "",
+      "trim": "",
+      "year": 2023,
+      "price_aed": 285000.0,
+      "available": null,
+      "exterior_color": "BLACK",
+      "interior_color": "BLACK"
+    },
+    {
+      "model_number": "TOY-FOR-EXR-1-PV-2.7-AT-ABK MC-SND BGE-26",
+      "product_description": "TOYOTA-FORTUNER-EXR-1-PV-2.7-AT-ATTITUDE BLACK MC-SAND BEIGE-26",
+      "brand": "Toyota",
+      "model": "",
+      "trim": "",
+      "year": 2026,
+      "price_aed": 122000.0,
+      "available": null,
+      "exterior_color": "ATTITUDE BLACK MC",
+      "interior_color": "SAND BEIGE"
+    }
+  ],
+  "price_updated": [],
+  "hidden": [
+    {
+      "model_number": "TOYOTA-CAMRY-LE-HEV-2.5-AT-26",
+      "price_aed": 139500.0,
+      "product_description": ""
+    },
+    {
+      "model_number": "TOYOTA-COROLLA-ELITE-HEV-1.8-AT-26",
+      "price_aed": 115000,
+      "product_description": ""
+    },
+    {
+      "model_number": "MG-ZS-COMFORT-PV-1.5-AT-26",
+      "price_aed": 79500.0,
+      "product_description": ""
+    },
+    {
+      "model_number": "TOYOTA-LC300-EXR-1-DV-3.3-AT-26",
+      "price_aed": 271000,
+      "product_description": ""
+    },
+    {
+      "model_number": "ROX-01-6SEATER-CHINA-PHEV-1.5-AT-26",
+      "price_aed": 179900,
+      "product_description": ""
+    },
+    {
+      "model_number": "TOYOTA-PRADO-P28STD-DV-2.8-AT-26",
+      "price_aed": 262000,
+      "product_description": ""
+    },
+    {
+      "model_number": "MG-ZS-STANDARD-PV-1.5-AT-26",
+      "price_aed": 71000,
+      "product_description": ""
+    },
+    {
+      "model_number": "ROX-01-6SEATER-PHEV-1.5-AT-26",
+      "price_aed": 175000,
+      "product_description": ""
+    },
+    {
+      "model_number": "TOYOTA-CAMRY-CLEN-PV-AT-BLACK-BLACK-26",
+      "price_aed": 129000,
+      "product_description": ""
+    },
+    {
+      "model_number": "LEXUS LX700-LX7VIP-HEV-3.5-AT-26",
+      "price_aed": 459000,
+      "product_description": ""
+    },
+    {
+      "model_number": "TOYOTA-CAMRY-CLEN-PV-AT-BLACK-BLACK-2026",
+      "price_aed": 129000,
+      "product_description": ""
+    }
+  ],
+  "unchanged": [],
+  "restocked": []
+}

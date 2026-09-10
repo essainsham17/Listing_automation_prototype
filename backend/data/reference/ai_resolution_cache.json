@@ -1,0 +1,47 @@
+{
+  "Color|SONIC QUARTZ": {
+    "raw_value": "SONIC QUARTZ",
+    "parent": "Color",
+    "status": "matched",
+    "name": "Silver",
+    "id": "15",
+    "resolved_at": "2026-08-27T11:46:12.468351+00:00",
+    "method": "llm"
+  },
+  "Interior Color|GREY": {
+    "raw_value": "GREY",
+    "parent": "Interior Color",
+    "status": "missing",
+    "name": null,
+    "id": null,
+    "resolved_at": "2026-09-04T04:40:07.467020+00:00",
+    "method": "llm_no_match"
+  },
+  "Interior Color|ROSE": {
+    "raw_value": "ROSE",
+    "parent": "Interior Color",
+    "status": "missing",
+    "name": null,
+    "id": null,
+    "resolved_at": "2026-09-04T07:01:42.244090+00:00",
+    "method": "llm_no_match"
+  },
+  "Interior Color|RED&BLACK": {
+    "raw_value": "RED&BLACK",
+    "parent": "Interior Color",
+    "status": "missing",
+    "name": null,
+    "id": null,
+    "resolved_at": "2026-09-05T05:35:55.322509+00:00",
+    "method": "llm_no_match"
+  },
+  "Interior Color|DARK GREY": {
+    "raw_value": "DARK GREY",
+    "parent": "Interior Color",
+    "status": "missing",
+    "name": null,
+    "id": null,
+    "resolved_at": "2026-09-10T06:12:30.089943+00:00",
+    "method": "llm_no_match"
+  }
+}

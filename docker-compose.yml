@@ -1,0 +1,13 @@
+# Runs the prototype in Docker with the spec-sheet and photo library and the backend data folder mounted.
+services:
+  app:
+    build: .
+    ports:
+      - "4000:4000"
+    env_file:
+      - backend/.env
+    environment:
+      LOCAL_PHOTOS_ROOT: /library
+    volumes:
+      - ${PHOTOS_LIBRARY:?Set PHOTOS_LIBRARY to the folder that holds the spec-sheet and photo library}:/library:ro
+      - ./backend/data:/srv/backend/data

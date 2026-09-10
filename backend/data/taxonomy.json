@@ -1,0 +1,180 @@
+{
+  "_comment": [
+    "LOCAL STAND-IN for the admin panel's Brand / Model / Trim tables.",
+    "Generated from the model codes actually present in data/stock.xlsx and",
+    "data/listings.json, so the local panel covers the cars being tested with.",
+    "",
+    "The real panel's tables are the source of truth. This exists so the",
+    "prototype's dropdowns behave the same way: you may SELECT an existing",
+    "entry, and you may never add one that is not here. app.js enforces that",
+    "-- an extracted value with no matching option is left blank and flagged,",
+    "never invented.",
+    "",
+    "Edit freely; it is data, not code."
+  ],
+  "brands": [
+    {
+      "name": "GAC",
+      "models": [
+        {
+          "name": "EMKOO",
+          "trims": [
+            "GE"
+          ],
+          "years": [
+            2026
+          ]
+        }
+      ]
+    },
+    {
+      "name": "LEXUS",
+      "models": [
+        {
+          "name": "LX600",
+          "trims": [
+            "SIGNATURE"
+          ],
+          "years": [
+            2026
+          ]
+        },
+        {
+          "name": "LX7VIP",
+          "trims": [],
+          "years": [
+            2026
+          ]
+        },
+        {
+          "name": "NX",
+          "trims": [
+            "NHLUX"
+          ],
+          "years": [
+            2026
+          ]
+        }
+      ]
+    },
+    {
+      "name": "MG",
+      "models": [
+        {
+          "name": "ZS",
+          "trims": [
+            "COMFORT"
+          ],
+          "years": [
+            2026
+          ]
+        }
+      ]
+    },
+    {
+      "name": "ROX",
+      "models": [
+        {
+          "name": "01",
+          "trims": [
+            "6SEATER"
+          ],
+          "years": [
+            2026
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SUZUKI",
+      "models": [
+        {
+          "name": "JIMNY",
+          "trims": [
+            "3DOOR GLX"
+          ],
+          "years": [
+            2026
+          ]
+        }
+      ]
+    },
+    {
+      "name": "TOYOTA",
+      "models": [
+        {
+          "name": "CAMRY",
+          "trims": [
+            "CLEN",
+            "LE"
+          ],
+          "years": [
+            2026
+          ]
+        },
+        {
+          "name": "COROLLA",
+          "trims": [
+            "ELITE"
+          ],
+          "years": [
+            2026
+          ]
+        },
+        {
+          "name": "CROWN",
+          "trims": [],
+          "years": [
+            2026
+          ]
+        },
+        {
+          "name": "HIACE COMMUTER",
+          "trims": [
+            "HAT26"
+          ],
+          "years": [
+            2026
+          ]
+        },
+        {
+          "name": "HILUX",
+          "trims": [
+            "105HS"
+          ],
+          "years": [
+            2026
+          ]
+        },
+        {
+          "name": "LC300",
+          "trims": [
+            "EXR",
+            "VX33L"
+          ],
+          "years": [
+            2026
+          ]
+        },
+        {
+          "name": "PRADO",
+          "trims": [
+            "P28STD"
+          ],
+          "years": [
+            2026
+          ]
+        },
+        {
+          "name": "URBAN CRUISER",
+          "trims": [
+            "GL"
+          ],
+          "years": [
+            2026
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "_comment": [
+    "PARTIAL SAMPLE, transcribed from two screenshots of the admin panel's",
+    "'Parent Feature Lists' and 'Feature With Values Lists' on 2026-08-24.",
+    "",
+    "This is a TEST FIXTURE, not the source of truth. Real ids run to at least",
+    "164, so roughly 130 more features exist than are captured here. Replace",
+    "this with a full export before relying on it -- the admin panel's",
+    "'Feature With Values' screen has an Import File button, so an export or",
+    "the original import file should be obtainable.",
+    "",
+    "MANDATORY groups matter: the form appears to require at least one feature",
+    "from each. Extraction finding nothing in one is a blocker for the human,",
+    "not something to quietly ignore."
+  ],
+  "parent_features": [
+    {"id": 1, "name": "Interior Feature",      "slug": "interior_feature",       "mandatory": false},
+    {"id": 2, "name": "Exterior and Controls", "slug": "exterior_and_controls",  "mandatory": true},
+    {"id": 3, "name": "Security",              "slug": "security",               "mandatory": false},
+    {"id": 4, "name": "Comfort & Convenience", "slug": "comfort_and_convenience","mandatory": true},
+    {"id": 5, "name": "Infotainment",          "slug": "infotainment",           "mandatory": false}
+  ],
+  "features": [
+    {"id": 111, "name": "360 degree camera",           "slug": "360-degree-camera",           "parent": "Comfort & Convenience"},
+    {"id": 61,  "name": "4WD",                          "slug": "4wd",                          "parent": "Security"},
+    {"id": 77,  "name": "ABS",                          "slug": "abs",                          "parent": "Security"},
+    {"id": 17,  "name": "AUX audio in",                 "slug": "aux-audio-in",                 "parent": "Interior Feature"},
+    {"id": 86,  "name": "Adaptive cruise control",      "slug": "adaptive-cruise-control",      "parent": "Security"},
+    {"id": 99,  "name": "Additional Features",          "slug": "additional-features",          "parent": "Comfort & Convenience"},
+    {"id": 125, "name": "Air Purifier",                 "slug": "air-purifier",                 "parent": "Comfort & Convenience"},
+    {"id": 25,  "name": "Air conditioning",             "slug": "air-conditioning",             "parent": "Interior Feature"},
+    {"id": 51,  "name": "Air suspension front & rear",  "slug": "air-suspension-front-&-rear",  "parent": "Exterior and Controls"},
+    {"id": 78,  "name": "Airbags (front and side)",     "slug": "airbags-(front-and-side)",     "parent": "Security"},
+    {"id": 96,  "name": "All wheel drive",              "slug": "all-wheel-drive",              "parent": "Security"},
+    {"id": 131, "name": "Ambient Lighting",             "slug": "ambient-lighting",             "parent": "Comfort & Convenience"},
+    {"id": 64,  "name": "Anti-Theft Alarm System",      "slug": "anti-theft-alarm-system",      "parent": "Security"},
+    {"id": 50,  "name": "Auto Adjustable Headlights",   "slug": "auto-adjustable-headlights",   "parent": "Exterior and Controls"},
+    {"id": 162, "name": "Apple Car Play",               "slug": "apple-car-play",               "parent": "Infotainment"},
+    {"id": 156, "name": "Bluetooth system",             "slug": "bluetooth-system",             "parent": "Infotainment"},
+    {"id": 154, "name": "CD/DVD Player",                "slug": "cd/dvd-player",                "parent": "Infotainment"},
+    {"id": 5,   "name": "Fabric Seats",                 "slug": "fabric-seats",                 "parent": "Interior Feature"},
+    {"id": 160, "name": "Front Speakers",               "slug": "front-speakers",               "parent": "Infotainment"},
+    {"id": 149, "name": "Headlight On Reminder",        "slug": "headlight-on-reminder",        "parent": "Comfort & Convenience"},
+    {"id": 151, "name": "Heated Seats",                 "slug": "heated-seats",                 "parent": "Comfort & Convenience"},
+    {"id": 147, "name": "Power Steering",               "slug": "power-steering",               "parent": "Comfort & Convenience"},
+    {"id": 158, "name": "Premium Sound System",         "slug": "premium-sound-system",         "parent": "Infotainment"},
+    {"id": 159, "name": "Rear Speakers",                "slug": "rear-speakers",                "parent": "Infotainment"},
+    {"id": 157, "name": "Rear TV screens",              "slug": "rear-tv-screens",              "parent": "Infotainment"},
+    {"id": 164, "name": "Touch Screen",                 "slug": "touch-screen",                 "parent": "Infotainment"},
+    {"id": 153, "name": "USB & Auxiliary Cable",        "slug": "usb-&-auxiliary-cable",        "parent": "Infotainment"},
+    {"id": 161, "name": "Voice Command",                "slug": "voice-command",                "parent": "Infotainment"}
+  ]
+}

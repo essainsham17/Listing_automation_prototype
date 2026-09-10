@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<!-- Add Car Details wizard page: spec sheet auto-fill form, photo upload and publish steps. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Inventory — Add Car Details</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<div class="shell2">
+  <aside class="sidebar2">
+    <div class="sidebar2-logo">LEGEND<span>MOTORS</span></div>
+    <nav class="sidebar2-nav">
+      <div class="sidebar2-item">Dashboard</div>
+      <a class="sidebar2-item sidebar2-item--live sidebar2-item--active" href="index.html">Manage Car Details</a>
+      <div class="sidebar2-item">Manage Car Features</div>
+      <div class="sidebar2-item">Manage Car Specification</div>
+      <div class="sidebar2-item">Manage Car Tags</div>
+      <a class="sidebar2-item sidebar2-item--live" href="website.html">Car Inventory</a>
+      <a class="sidebar2-item sidebar2-item--live" href="stock-sync.html">Stock Sync</a>
+      <a class="sidebar2-item sidebar2-item--live" href="marketing-tracker.html">Marketing Tracker</a>
+      <div class="sidebar2-item">Media Library</div>
+    </nav>
+    <div class="sidebar2-note">
+      Prototype build — replicates the Add Car Details wizard with the AI auto-fill step from the project proposal. Greyed items aren't wired up.
+    </div>
+  </aside>
+
+  <main class="main2">
+    <div class="topbar2">
+      <div class="search"><input type="text" placeholder="Search…" /></div>
+      <div class="pill-badge">AI Prototype</div>
+    </div>
+
+    <div class="wizard-card">
+      <div class="wizard-header">ADD CAR DETAILS</div>
+
+      <div class="steps">
+        <div class="step-track"></div>
+        <button class="step step--active" data-step="details">
+          <span class="step-icon">✎</span><span class="step-label">Car Details</span>
+        </button>
+        <button class="step" data-step="photos">
+          <span class="step-icon">▧</span><span class="step-label">Photos &amp; Assets</span>
+        </button>
+        <button class="step" data-step="publish">
+          <span class="step-icon">👍</span><span class="step-label">Publish</span>
+        </button>
+      </div>
+
+      <section class="panel" id="panel-details">
+
+        <div class="ai-upload-bar">
+          <div class="ai-upload-text">
+            <strong>Auto-fill from spec sheet &amp; photos</strong>
+            <span>Fetches automatically as soon as a Stock ID is entered (matched from the Salesforce Product Description, searched via SharePoint) — fills the fields below and sorts photos into Exterior/Interior.</span>
+          </div>
+        </div>
+        <div id="extractionStatus" class="extraction-status" hidden></div>
+
+        <div class="ai-upload-bar" style="margin-top:10px;">
+          <div class="ai-upload-text">
+            <strong>Or upload the spec sheet PDF directly</strong>
+            <span>Always available as an alternate path — use it if auto-fill can't locate the folder, or any time you'd rather attach the sheet yourself. Photos still need to be added manually below when using this path.</span>
+          </div>
+          <label class="btn btn--primary btn--upload">
+            <input type="file" id="specSheetInput" accept="application/pdf" hidden />
+            Upload Spec Sheet PDF
+          </label>
+        </div>
+
+        <fieldset class="card">
+          <legend>Select Tags</legend>
+          <div class="checkbox-row">
+            <label class="checkbox"><input type="checkbox" name="tags" value="Hot Deal" /> Hot Deal</label>
+            <label class="checkbox"><input type="checkbox" name="tags" value="Most Popular" /> Most Popular</label>
+            <label class="checkbox"><input type="checkbox" name="tags" value="Just Arrived" /> Just Arrived</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="card">
+          <legend>General Car Details</legend>
+          <div class="grid-2">
+            <div class="field">
+              <label for="stockId">Stock ID</label>
+              <input type="text" id="stockId" placeholder="Add your own ID" />
+            </div>
+            <div class="field">
+              <label for="brand">Select Brand</label>
+              <select id="brand"><option value="">Search and select a brand</option></select>
+            </div>
+            <div class="field">
+              <label for="model">Select Model</label>
+              <select id="model"><option value="">Search and select a model</option></select>
+            </div>
+            <div class="field">
+              <label for="trim">Select Trim</label>
+              <select id="trim"><option value="">Search and select a trim</option></select>
+            </div>
+            <div class="field">
+              <label for="year">Select Year</label>
+              <select id="year"><option value="">Search and select a year</option></select>
+            </div>
+            <div class="field">
+              <label for="additionalInfo">Additional Info <span style="font-weight:normal; color:var(--text-muted, #888);">— one point per line, shown as bullet points on the listing (e.g. "Sunroof: Tilt &amp; Slide Sunroof")</span></label>
+              <textarea id="additionalInfo" rows="6" placeholder="Engine: 2.4L Petrol&#10;Sunroof: Tilt &amp; Slide Sunroof&#10;..."></textarea>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="card">
+          <legend>Car Price</legend>
+          <div class="grid-2">
+            <div class="field">
+              <label for="priceAed">Price in AED</label>
+              <input type="number" id="priceAed" placeholder="0" />
+            </div>
+            <div class="field">
+              <label for="priceUsd">Price in USD</label>
+              <input type="number" id="priceUsd" placeholder="0" />
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="card">
+          <legend>Specifications</legend>
+          <div class="grid-3" id="specGrid">
+          </div>
+        </fieldset>
+
+        <fieldset class="card">
+          <legend>Description</legend>
+          <div class="editor-toolbar">
+            <button type="button" data-cmd="bold"><b>B</b></button>
+            <button type="button" data-cmd="insertUnorderedList">•≡</button>
+            <button type="button" data-cmd="italic"><i>I</i></button>
+            <button type="button" data-cmd="undo">↶</button>
+            <button type="button" data-cmd="redo">↷</button>
+          </div>
+          <div class="editor" id="descriptionEditor" contenteditable="true" data-placeholder="Press '/' for commands"></div>
+        </fieldset>
+
+        <fieldset class="card">
+          <legend>Infotainment</legend>
+          <div class="checkbox-grid" id="grid-infotainment"></div>
+        </fieldset>
+
+        <fieldset class="card">
+          <legend>Comfort &amp; Convenience <span class="required">*</span></legend>
+          <div class="checkbox-grid" id="grid-comfort"></div>
+        </fieldset>
+
+        <fieldset class="card">
+          <legend>Security</legend>
+          <div class="checkbox-grid" id="grid-security"></div>
+        </fieldset>
+
+        <fieldset class="card">
+          <legend>Exterior and Controls <span class="required">*</span></legend>
+          <div class="checkbox-grid" id="grid-exterior_and_controls"></div>
+        </fieldset>
+
+        <fieldset class="card">
+          <legend>Interior Feature</legend>
+          <div class="checkbox-grid" id="grid-interior_feature"></div>
+        </fieldset>
+
+        <fieldset class="card" id="colorChoiceCard" hidden>
+          <legend>Which colour is this car? <span style="font-weight:normal; color:var(--text-muted, #888);">— the Product Description doesn't say, and this model has more than one colour in the photo library. Click the right one to set both colour fields.</span></legend>
+          <ul id="colorChoiceList" class="bullet-list"></ul>
+        </fieldset>
+
+        <fieldset class="card" id="suggestedFeaturesCard" hidden>
+          <legend>Suggested Features <span style="font-weight:normal; color:var(--text-muted, #888);">— found on the spec sheet, no matching checkbox exists yet. Click one to add it as a bullet point to Additional Info.</span></legend>
+          <ul id="suggestedFeaturesImportant" class="bullet-list"></ul>
+          <details id="suggestedFeaturesOtherDetails" hidden>
+            <summary id="suggestedFeaturesOtherSummary"></summary>
+            <ul id="suggestedFeaturesOther" class="bullet-list"></ul>
+          </details>
+        </fieldset>
+
+        <div class="step-actions">
+          <button class="btn btn--primary" data-next="photos">Next: Photos &amp; Assets</button>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-photos" hidden>
+        <h2 class="panel-title">Upload Car Assets</h2>
+
+        <h3 class="section-label">Exterior Images</h3>
+        <div class="dropzone" id="dropzone-exterior">
+          <div class="thumb-grid" id="thumbs-exterior"></div>
+          <div class="dropzone-hint">Drag &amp; drop images here, or click to select files</div>
+          <input type="file" id="fileInput-exterior" accept="image/*" multiple hidden />
+        </div>
+
+        <h3 class="section-label">Interior Images</h3>
+        <div class="dropzone" id="dropzone-interior">
+          <div class="thumb-grid" id="thumbs-interior"></div>
+          <div class="dropzone-hint">Drag &amp; drop images here, or click to select files</div>
+          <input type="file" id="fileInput-interior" accept="image/*" multiple hidden />
+        </div>
+
+        <div class="step-actions">
+          <button class="btn btn--ghost" data-next="details">Back</button>
+          <button class="btn btn--primary" data-next="publish">Next: Publish</button>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-publish" hidden>
+        <h2 class="panel-title">Review &amp; Publish</h2>
+        <p class="muted">No screenshot yet for this step — placeholder until you share it. Meanwhile, here's a summary of what's been entered:</p>
+        <pre class="review-json" id="reviewJson">{}</pre>
+
+        <div id="incompleteWarning" class="incomplete-warning" hidden>
+          <div class="incomplete-warning__title">Incomplete extraction — not all fields were read</div>
+          <p class="incomplete-warning__body" id="incompleteWarningBody"></p>
+          <label class="incomplete-warning__ack">
+            <input type="checkbox" id="incompleteAck" />
+            I have checked the missing sections against the spec sheet myself.
+          </label>
+        </div>
+
+        <div id="publishStatus" class="extraction-status" hidden></div>
+        <div class="step-actions">
+          <button class="btn btn--ghost" data-next="photos">Back</button>
+          <button class="btn btn--primary" id="publishBtn">Publish Listing</button>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

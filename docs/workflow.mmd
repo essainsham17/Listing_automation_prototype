@@ -1,0 +1,138 @@
+%% PROTOTYPE PIPELINE — legend_admin_replica_local
+%%
+%% This tree runs on FREE models against a LOCAL synced folder. The deployed
+%% tree (listing_automation_deployed) uses Claude and SharePoint and has its
+%% own copy of this diagram — the two were previously one identical file,
+%% which meant it could not be correct about either.
+%%
+%% Changed from the previous version: AUTO-FILL is now drawn as the three
+%% LangGraph agents that actually run it (app/agent_graph.py, wired into
+%% app/main.py's auto-fill endpoint this session) instead of as a flat list
+%% of steps. SALESFORCE AGENT is drawn dashed and disconnected — the node
+%% exists in code and is independently tested, but is not yet a step in the
+%% compiled graph; main.py still fetches that record itself and hands it to
+%% the graph as a starting fact. Wiring it in later is a routing change,
+%% not a rewrite.
+flowchart TD
+    SF(["Salesforce export (.xlsx)<br/>uploaded by hand"])
+
+    subgraph RECON["COMPARE STOCK — no writes"]
+        direction TB
+        RC["Compare against<br/>published listings"]
+        BKT{"Match on<br/>Model Code"}
+        NEWQ["New"]
+        PRICEQ["Price changed"]
+        RESTOCKQ["Restocked"]
+        SOLDQ["Sold out"]
+        UNCH["Unchanged"]
+    end
+
+    SF --> RC --> BKT
+    BKT -->|"not published"| NEWQ
+    BKT -->|"price differs"| PRICEQ
+    BKT -->|"was hidden,<br/>now in stock"| RESTOCKQ
+    BKT -->|"absent from<br/>the export"| SOLDQ
+    BKT -->|"price same"| UNCH
+
+    REV1(["Reviewer opens<br/>Stock Sync"])
+    NEWQ --> REV1
+    PRICEQ --> REV1
+    RESTOCKQ --> REV1
+    SOLDQ --> REV1
+
+    REV1 -->|"Apply / Delist / Restock<br/>— no model involved"| DB1["Listing updated"]
+    REV1 -->|"Start Listing<br/>(new car only)"| AUTOFILL
+
+    subgraph AUTOFILL["AUTO-FILL — app/agent_graph.py, run_pipeline()"]
+        direction TB
+
+        SFAGENT["SALESFORCE AGENT<br/>defined, not a graph node —<br/>main.py fetches this fact<br/>and hands it to the graph"]
+
+        subgraph FETCHAGENT["FETCH AGENT — sharepoint_agent<br/>(graph entry point)"]
+            direction TB
+            FIND["Locate folder in<br/>LOCAL_PHOTOS_ROOT"]
+            EXACT{"Exact spec-sheet<br/>filename?"}
+            IDX["Score the cached<br/>folder index"]
+            NAV["Walk siblings by<br/>token overlap"]
+            TIE["Model breaks the tie<br/>— picks from an<br/>enumerated list only"]
+            GOT["PDF + photos located"]
+        end
+
+        subgraph EXTRACTAGENT["EXTRACTION AGENT — extraction_agent"]
+            direction TB
+            RENDER["Rasterise pages<br/>(scanned PDFs — no text layer)"]
+            TRIM["Drop photo pages<br/>by white-pixel fraction"]
+            EXTRACT["Vision extraction<br/>Gemma via OpenRouter (free)"]
+            TRUNC{"Hit the output<br/>token cap?"}
+            SALVAGE["Repair the JSON,<br/>flag the gap"]
+        end
+
+        CLASSIFY["Photo classifier<br/>local YOLO, ~15ms each<br/>— main.py, not a graph node"]
+
+        subgraph MATCHAGENT["MATCHING AGENT — matching_agent<br/>no available fields yet at auto-fill<br/>time → free no-op here; the real<br/>match runs later via /match-fields"]
+            direction TB
+            MATCHDET["Deterministic<br/>token-overlap pass"]
+            MATCHLLM["Model on the leftovers<br/>Groq + Gemma, merged"]
+        end
+
+        ASSEMBLE["Assemble: specs + features +<br/>description + photos +<br/>low-confidence flags"]
+    end
+
+    FIND --> EXACT
+    EXACT -->|yes| GOT
+    EXACT -->|no| IDX
+    IDX -->|"clear winner"| GOT
+    IDX -->|"no index / no match"| NAV
+    NAV -->|"clear winner"| GOT
+    NAV -->|"genuine tie"| TIE --> GOT
+
+    GOT --> RENDER --> TRIM --> EXTRACT --> TRUNC
+    TRUNC -->|no| MATCHDET
+    TRUNC -->|yes| SALVAGE --> MATCHDET
+    GOT -.->|"sequential now — 15ms/photo,<br/>not worth threading around<br/>the graph's single invoke()"| CLASSIFY --> ASSEMBLE
+
+    MATCHDET -->|"decisive"| ASSEMBLE
+    MATCHDET -->|"leftover"| MATCHLLM --> ASSEMBLE
+
+    subgraph RESOLVE["RESOLVE TO THE PANEL'S IDS — deterministic, no model"]
+        direction TB
+        RBRAND["Brand → Model → Trim<br/>each scoped to its parent"]
+        RFEAT["Feature labels → feature ids<br/>+ mandatory-group check"]
+        RSPEC["Spec rows → value ids<br/>scoped per parent field"]
+        OUTCOME{"Per field"}
+        MATCHED["Matched<br/>→ use the id"]
+        AMBIG["Ambiguous<br/>→ reviewer picks"]
+        MISSING["Missing<br/>→ a person adds it"]
+    end
+
+    ASSEMBLE --> RBRAND --> OUTCOME
+    ASSEMBLE --> RFEAT --> OUTCOME
+    ASSEMBLE --> RSPEC --> OUTCOME
+    OUTCOME --> MATCHED
+    OUTCOME --> AMBIG
+    OUTCOME --> MISSING
+
+    REV2(["Reviewer opens<br/>Add Car Details"])
+    MATCHED --> REV2
+    AMBIG --> REV2
+    MISSING --> REV2
+
+    REV2 -->|"correct any<br/>flagged field"| REV2
+    REV2 -->|Publish| PUBLISH["Validated and saved"]
+    PUBLISH --> DB[("Listings store")]
+
+    classDef tool fill:#f4e1cc,stroke:#d9721c,stroke-width:1.5px,color:#201c1a;
+    classDef det fill:#dceee4,stroke:#2f7d5e,stroke-width:1.5px,color:#201c1a;
+    classDef backend fill:#e6def0,stroke:#4a3266,stroke-width:1.5px,color:#201c1a;
+    classDef human fill:#ffffff,stroke:#2f6b5e,stroke-width:2px,color:#201c1a;
+    classDef store fill:#e6def0,stroke:#4a3266,stroke-width:1.5px,color:#201c1a;
+    classDef excluded fill:#ffffff,stroke:#8a8578,stroke-width:1.5px,stroke-dasharray:5 4,color:#5c584d;
+    classDef agent fill:none,stroke:#4a3266,stroke-width:1.5px,color:#201c1a;
+
+    class EXTRACT,TIE,MATCHLLM tool
+    class RC,BKT,NEWQ,PRICEQ,RESTOCKQ,SOLDQ,UNCH,FIND,EXACT,IDX,NAV,GOT,RENDER,TRIM,TRUNC,SALVAGE,CLASSIFY,MATCHDET,ASSEMBLE,RBRAND,RFEAT,RSPEC,OUTCOME,MATCHED,AMBIG,MISSING det
+    class SF,DB1,PUBLISH backend
+    class DB store
+    class REV1,REV2 human
+    class SFAGENT excluded
+    class FETCHAGENT,EXTRACTAGENT,MATCHAGENT agent

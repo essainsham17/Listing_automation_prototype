@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<!-- Admin page for tracking marketing work (photos, edit, spec sheet, upload) on new stock models. -->
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Marketing Tracker — Legend Motors Admin</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .track-banner { background: var(--accent-secondary); border-radius: 10px; padding: 20px 24px; display: flex; align-items: center; gap: 16px; color: #fff; }
+  .track-banner-icon { width: 42px; height: 42px; flex-shrink: 0; border-radius: 50%; background: var(--brand-900); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+  .track-banner-text { flex: 1; }
+  .track-banner-text strong { display: block; font-size: 15.5px; margin-bottom: 3px; }
+  .track-banner-text span { font-size: 12.5px; opacity: 0.85; line-height: 1.5; }
+
+  .btn2 { border: none; border-radius: 6px; padding: 10px 16px; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+  .btn2--white { background: #fff; color: var(--accent-secondary); }
+  .btn2--orange { background: var(--brand-900); color: #fff; }
+  .btn2--orange:hover { background: var(--brand-700); }
+  .btn2--outline { background: #fff; color: var(--accent-secondary); border: 1px solid var(--accent-secondary); }
+  .btn2:disabled { opacity: 0.5; cursor: default; }
+
+  .track-card { background: #fff; border: 1px solid var(--border); border-radius: 10px; margin-top: 22px; overflow: hidden; }
+  .track-card-title { font-size: 12.5px; font-weight: 700; letter-spacing: 0.03em; text-transform: uppercase; padding: 16px 20px; }
+  .track-table { width: 100%; border-collapse: collapse; }
+  .track-table th { text-align: left; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); background: var(--bg-muted); padding: 10px 14px; }
+  .track-table td { padding: 10px 14px; font-size: 13px; border-top: 1px solid var(--border); vertical-align: middle; }
+  .model-id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; background: var(--bg-muted); padding: 3px 8px; border-radius: 5px; }
+  .empty-row td { color: #a6a9b2; font-style: italic; }
+
+  .track-table input[type="text"], .track-table input[type="date"], .track-table input[type="number"] {
+    width: 100%; box-sizing: border-box; padding: 6px 8px; border: 1px solid var(--border);
+    border-radius: 5px; font-size: 12.5px;
+  }
+  .vin-cell input { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .vin-cell input.invalid { border-color: #c0392b; background: #fdecea; }
+
+  .tick { width: 20px; height: 20px; cursor: pointer; }
+  .tick[data-auto="true"] { cursor: default; accent-color: #206127; }
+  .tick-cell { text-align: center; }
+  .row-status { font-size: 11px; color: var(--text-muted); display: block; margin-top: 2px; }
+
+  .add-new-btn[disabled] { font-size: 11.5px; }
+</style>
+</head>
+<body>
+<div class="shell2">
+  <aside class="sidebar2">
+    <div class="sidebar2-logo">LEGEND<span>MOTORS</span></div>
+    <nav class="sidebar2-nav">
+      <div class="sidebar2-item">Dashboard</div>
+      <a class="sidebar2-item sidebar2-item--live" href="index.html">Manage Car Details</a>
+      <div class="sidebar2-item">Manage Car Features</div>
+      <div class="sidebar2-item">Manage Car Specification</div>
+      <div class="sidebar2-item">Manage Car Tags</div>
+      <a class="sidebar2-item sidebar2-item--live" href="website.html">Car Inventory</a>
+      <a class="sidebar2-item sidebar2-item--live" href="stock-sync.html">Stock Sync</a>
+      <a class="sidebar2-item sidebar2-item--live sidebar2-item--active" href="marketing-tracker.html">Marketing Tracker</a>
+      <div class="sidebar2-item">Media Library</div>
+    </nav>
+    <div class="sidebar2-note">
+      Prototype build — replaces the VIN-keyed Excel sheet marketing uses to
+      track photographing / spec sheet / SharePoint progress on new cars.
+    </div>
+  </aside>
+
+  <main class="main2">
+    <div class="topbar2">
+      <div class="search"><input type="text" placeholder="Search…" /></div>
+      <div class="pill-badge">AI Prototype</div>
+    </div>
+
+    <h1 class="page-title">Marketing Tracker</h1>
+
+    <div class="track-banner">
+      <div class="track-banner-icon">📋</div>
+      <div class="track-banner-text">
+        <strong>New cars from Salesforce, ready to work</strong>
+        <span>Sourced from Stock Sync's "New Models" — run Stock Sync first if nothing shows up below.</span>
+      </div>
+    </div>
+
+    <div class="track-card">
+      <div class="track-card-title">🆕 Not yet tracked</div>
+      <table class="track-table">
+        <thead><tr><th>Model</th><th>Colour</th><th>Price (AED)</th><th></th></tr></thead>
+        <tbody id="untrackedBody"><tr class="empty-row"><td colspan="4">Loading…</td></tr></tbody>
+      </table>
+    </div>
+
+    <div class="track-card">
+      <div class="track-card-title">Being tracked</div>
+      <table class="track-table">
+        <thead>
+          <tr>
+            <th style="width:20%">Model</th>
+            <th style="width:15%">VIN</th>
+            <th style="width:7%">Priority</th>
+            <th style="width:12%">Assigned to</th>
+            <th style="width:11%">Due date</th>
+            <th style="width:7%; text-align:center">Photographed</th>
+            <th style="width:7%; text-align:center">Edited</th>
+            <th style="width:7%; text-align:center">Spec generated</th>
+            <th style="width:7%; text-align:center">Uploaded</th>
+            <th style="width:7%"></th>
+          </tr>
+        </thead>
+        <tbody id="trackedBody"><tr class="empty-row"><td colspan="10">Loading…</td></tr></tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<script>
+const SPEC_SHEET_AUTOMATION_URL = "http://127.0.0.1:5052";
+
+const VIN_PATTERN = /^[A-HJ-NPR-Z0-9]{17}$/;
+
+let state = { tracked: [], untracked_new: [] };
+
+// Fetches tracked and untracked rows from /marketing/tracker into state and re-renders both tables.
+async function loadTracker() {
+  const res = await fetch("/marketing/tracker");
+  state = await res.json();
+  render();
+}
+
+// Renders both the untracked and tracked tables from the current state.
+function render() {
+  renderUntracked();
+  renderTracked();
+}
+
+// Renders new untracked models with colour, price and an Add to tracker button, or an empty-state row.
+function renderUntracked() {
+  const tbody = document.getElementById("untrackedBody");
+  if (!state.untracked_new.length) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="4">Nothing new and untracked right now.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = state.untracked_new.map((r) => `
+    <tr>
+      <td><span class="model-id">${r.model_number}</span><br>${r.product_description || ""}</td>
+      <td>${[r.exterior_color, r.interior_color].filter(Boolean).join(" / ") || "—"}</td>
+      <td>${r.price_aed != null ? Number(r.price_aed).toLocaleString() : "—"}</td>
+      <td><button class="btn2 btn2--orange" type="button" onclick="addToTracker('${r.model_number}', this)">Add to tracker</button></td>
+    </tr>
+  `).join("");
+}
+
+// Renders tracked rows with editable fields, step checkboxes (spec tick read-only) and an action cell.
+function renderTracked() {
+  const tbody = document.getElementById("trackedBody");
+  if (!state.tracked.length) {
+    tbody.innerHTML = `<tr class="empty-row"><td colspan="10">Nothing tracked yet.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = state.tracked.map((r) => `
+    <tr data-id="${r.id}">
+      <td><span class="model-id">${r.model_number}</span><br>${r.model_description || ""}
+          <div style="font-size:11px;color:var(--text-muted);margin-top:2px;">${[r.exterior_color, r.interior_color].filter(Boolean).join(" / ")}</div></td>
+      <td class="vin-cell"><input type="text" maxlength="17" value="${r.vin || ""}"
+             onchange="saveField(${r.id}, 'vin', this.value.trim().toUpperCase(), this)"></td>
+      <td><input type="number" min="1" value="${r.priority ?? ""}"
+             onchange="saveField(${r.id}, 'priority', this.value ? parseInt(this.value, 10) : null, this)"></td>
+      <td><input type="text" value="${r.assigned_to || ""}"
+             onchange="saveField(${r.id}, 'assigned_to', this.value, this)"></td>
+      <td><input type="date" value="${r.due_date || ""}"
+             onchange="saveField(${r.id}, 'due_date', this.value || null, this)"></td>
+      <td class="tick-cell"><input type="checkbox" class="tick" ${r.photographed_at ? "checked" : ""}
+             onchange="toggleTick(${r.id}, 'photographed', this.checked)"></td>
+      <td class="tick-cell"><input type="checkbox" class="tick" ${r.edited_at ? "checked" : ""}
+             onchange="toggleTick(${r.id}, 'edited', this.checked)"></td>
+      <td class="tick-cell" title="${r.spec_generated_at ? 'Set automatically when spec_sheet_automation files both PDFs' : 'Not generated yet'}">
+             <input type="checkbox" class="tick" data-auto="true" ${r.spec_generated_at ? "checked" : ""} disabled></td>
+      <td class="tick-cell"><input type="checkbox" class="tick" ${r.sharepoint_uploaded_at ? "checked" : ""}
+             onchange="toggleTick(${r.id}, 'sharepoint_uploaded', this.checked)"></td>
+      <td>${uploadOrAddCell(r)}</td>
+    </tr>
+  `).join("");
+}
+
+// Returns Add new car once specs exist, else an Upload specs link for a valid VIN or a disabled button.
+function uploadOrAddCell(r) {
+  if (r.spec_generated_at) {
+    return `<button class="btn2 btn2--orange add-new-btn" type="button" onclick="startListing('${r.model_number}')">Add new car</button>`;
+  }
+  const vinOk = VIN_PATTERN.test((r.vin || "").toUpperCase());
+  const uploadUrl = `${SPEC_SHEET_AUTOMATION_URL}/?vin=${encodeURIComponent(r.vin || "")}`
+                   + `&description=${encodeURIComponent(r.model_description || "")}`;
+  return vinOk
+    ? `<a class="btn2 btn2--outline" href="${uploadUrl}" target="_blank" rel="noopener">Upload specs</a>`
+    : `<button class="btn2 add-new-btn" type="button" disabled title="Type a valid 17-character VIN first">Spec sheet not yet created</button>`;
+}
+
+// Navigates to the listing wizard in index.html with the model number passed as stock_id.
+function startListing(modelNumber) {
+  window.location.href = "index.html?stock_id=" + encodeURIComponent(modelNumber);
+}
+
+// Posts a model number to /marketing/tracker/add, reloads the tracker, and alerts on failure.
+async function addToTracker(modelNumber, btn) {
+  btn.disabled = true;
+  try {
+    const res = await fetch("/marketing/tracker/add", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ model_number: modelNumber }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.detail || `Server returned ${res.status}`);
+    }
+    await loadTracker();
+  } catch (e) {
+    alert("Couldn't add to tracker: " + e.message);
+    btn.disabled = false;
+  }
+}
+
+// Posts one field update for a tracker row and reloads, rejecting an invalid VIN; alerts on failure.
+async function saveField(rowId, field, value, input) {
+  if (field === "vin" && value) {
+    const ok = VIN_PATTERN.test(value);
+    input.classList.toggle("invalid", !ok);
+    if (!ok) {
+      alert("VIN must be 17 characters (letters and digits, no I, O or Q).");
+      return;
+    }
+  }
+  try {
+    const res = await fetch(`/marketing/tracker/${rowId}`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ [field]: value }),
+    });
+    if (!res.ok) throw new Error(`Server returned ${res.status}`);
+    await loadTracker();
+  } catch (e) {
+    alert(`Couldn't save ${field}: ` + e.message);
+  }
+}
+
+// Posts a step as done or undone for a tracker row, then reloads the tracker, alerting on failure.
+async function toggleTick(rowId, step, done) {
+  try {
+    const res = await fetch(`/marketing/tracker/${rowId}/tick`, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ step, done }),
+    });
+    if (!res.ok) throw new Error(`Server returned ${res.status}`);
+    await loadTracker();
+  } catch (e) {
+    alert(`Couldn't update ${step}: ` + e.message);
+    await loadTracker();
+  }
+}
+
+loadTracker();
+</script>
+</body>
+</html>

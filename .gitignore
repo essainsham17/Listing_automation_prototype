@@ -1,0 +1,13 @@
+# Files that must never be committed: API keys, local environments and generated caches.
+.env
+.env.*
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.claude/
+CLAUDE.md
+backend/data/backups/
+backend/data/*.bak*
+*.log
