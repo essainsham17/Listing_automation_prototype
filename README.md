@@ -10,7 +10,6 @@ A prototype that turns a new car from the Salesforce stock report into a filled 
 | `backend/app/` | FastAPI application (`app.main:app`): extraction, matching, folder lookup, Stock Sync, marketing tracker and photo classification |
 | `backend/data/` | Prototype data: listings, pending stock report, marketing tracker, folder index, the form's `schema.json` and `taxonomy.json`, reference catalogs |
 | `backend/scripts/` | `crawl_folder_index.py`, which rebuilds `data/folder_index.json` from the photo library |
-| `docs/` | Design notes and the workflow diagram |
 
 The backend serves the `frontend/` pages and serves `/schema.json` and `/taxonomy.json` from `backend/data/`.
 
