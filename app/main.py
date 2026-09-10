@@ -1,4 +1,4 @@
-"""FastAPI app serving the static UI plus auto-fill, matching, stock sync, tracker and taxonomy APIs."""
+"""FastAPI app serving the admin pages plus auto-fill, matching, Stock Sync and taxonomy APIs."""
 import base64
 import io
 import logging
@@ -16,7 +16,6 @@ from pydantic import BaseModel
 
 from app import agent_graph, config
 from app.db import add_listing, get_listing, load_listings, now_iso
-from app import marketing_tracker
 from app.extract import (extract_from_pdf, match_all_with_llm,
                          match_features_with_llm, match_fields_with_llm)
 from app.local_photos import read_bytes
@@ -35,7 +34,20 @@ from app.stock_sync import (
 )
 
 BACKEND_DIR = Path(__file__).resolve().parent.parent
-FRONTEND_DIR = BACKEND_DIR.parent / "frontend"
+
+
+def _find_frontend_dir():
+    """Returns the frontend folder from FRONTEND_DIR or a sibling checkout, or None when there is none."""
+    configured = os.environ.get("FRONTEND_DIR")
+    candidates = [configured] if configured else ["../frontend", "../lisitng_automation_frontend"]
+    for candidate in candidates:
+        path = (BACKEND_DIR / candidate).resolve()
+        if path.is_dir():
+            return path
+    return None
+
+
+FRONTEND_DIR = _find_frontend_dir()
 
 config.setup_logging()
 logger = logging.getLogger(__name__)
@@ -117,30 +129,6 @@ class PriceUpdateItem(BaseModel):
 class ApplyPriceUpdatesRequest(BaseModel):
     """Request body holding price update items for the price update and restock endpoints."""
     items: list[PriceUpdateItem]
-
-
-class AddTrackerRowRequest(BaseModel):
-    """Request body naming the model number to add to the marketing tracker."""
-    model_number: str
-
-
-class UpdateTrackerRowRequest(BaseModel):
-    """Partial update body for a tracker row: VIN, priority, assignee and due date."""
-    vin: str | None = None
-    priority: int | None = None
-    assigned_to: str | None = None
-    due_date: str | None = None
-
-
-class TickStepRequest(BaseModel):
-    """Request body naming a tracker step and whether to mark it done or clear it."""
-    step: str
-    done: bool = True
-
-
-class SpecGeneratedRequest(BaseModel):
-    """Request body carrying the VIN of a car whose spec sheet was generated."""
-    vin: str
 
 
 THUMBNAIL_MAX_DIMENSION = 800
@@ -409,57 +397,6 @@ async def apply_restock_endpoint(payload: ApplyPriceUpdatesRequest):
     return {"applied": applied, "pending": remaining}
 
 
-@app.get("/marketing/tracker")
-async def get_marketing_tracker():
-    """Returns tracked marketing rows plus pending new cars not yet in the tracker."""
-    return {"tracked": marketing_tracker.list_tracker(),
-            "untracked_new": marketing_tracker.list_untracked_new()}
-
-
-@app.post("/marketing/tracker/add")
-async def add_marketing_tracker_row(payload: AddTrackerRowRequest):
-    """Adds a pending new car to the marketing tracker, returning 400 if it cannot be added."""
-    try:
-        row = marketing_tracker.add_to_tracker(payload.model_number)
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    logger.info("marketing_tracker: added %s (row id %d)", payload.model_number, row["id"])
-    return row
-
-
-@app.post("/marketing/tracker/spec-generated")
-async def mark_spec_generated(payload: SpecGeneratedRequest):
-    """Stamps spec_generated_at on the tracker row matching a VIN and returns whether a row matched."""
-    row = marketing_tracker.set_spec_generated(payload.vin)
-    if row is None:
-        logger.warning("mark_spec_generated: no tracker row for VIN %s", payload.vin)
-        return {"matched": False}
-    logger.info("mark_spec_generated: row %d (VIN %s)", row["id"], payload.vin)
-    return {"matched": True, "row": row}
-
-
-@app.post("/marketing/tracker/{row_id}")
-async def update_marketing_tracker_row(row_id: int, payload: UpdateTrackerRowRequest):
-    """Applies the provided editable fields to a tracker row, returning 404 if the row is missing."""
-    changes = {k: v for k, v in payload.model_dump().items() if v is not None}
-    row = marketing_tracker.update_row(row_id, changes)
-    if row is None:
-        raise HTTPException(status_code=404, detail=f"No tracker row with id {row_id}")
-    return row
-
-
-@app.post("/marketing/tracker/{row_id}/tick")
-async def tick_marketing_tracker_step(row_id: int, payload: TickStepRequest):
-    """Sets or clears a step on a tracker row, returning 400 for an invalid step and 404 for a missing row."""
-    try:
-        row = marketing_tracker.tick_step(row_id, payload.step, payload.done)
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
-    if row is None:
-        raise HTTPException(status_code=404, detail=f"No tracker row with id {row_id}")
-    return row
-
-
 @app.post("/inventory/new/{model_number}/approve")
 async def approve_new_model(model_number: str, payload: dict):
     """Publishes a reviewed car as an active listing, returning 409 if the ID exists, and clears it from pending New Models."""
@@ -549,4 +486,7 @@ async def form_taxonomy():
     return FileResponse(BACKEND_DIR / "data" / "taxonomy.json", media_type="application/json")
 
 
-app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="static")
+if FRONTEND_DIR is not None:
+    app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="static")
+else:
+    logger.warning("No frontend folder found; serving the API only. Set FRONTEND_DIR to a checkout of the frontend repository.")

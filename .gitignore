@@ -8,6 +8,6 @@ __pycache__/
 .pytest_cache/
 .claude/
 CLAUDE.md
-backend/data/backups/
-backend/data/*.bak*
+data/backups/
+data/*.bak*
 *.log

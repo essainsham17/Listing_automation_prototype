@@ -1,13 +1,15 @@
-# Runs the prototype in Docker with the spec-sheet and photo library and the backend data folder mounted.
+# Runs the backend in Docker with the photo library, a frontend checkout and the data folder mounted.
 services:
   app:
     build: .
     ports:
       - "4000:4000"
     env_file:
-      - backend/.env
+      - .env
     environment:
       LOCAL_PHOTOS_ROOT: /library
+      FRONTEND_DIR: /srv/frontend
     volumes:
       - ${PHOTOS_LIBRARY:?Set PHOTOS_LIBRARY to the folder that holds the spec-sheet and photo library}:/library:ro
-      - ./backend/data:/srv/backend/data
+      - ${FRONTEND_PATH:-../lisitng_automation_frontend}:/srv/frontend:ro
+      - ./data:/srv/backend/data

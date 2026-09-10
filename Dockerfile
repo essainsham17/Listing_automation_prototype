@@ -1,4 +1,4 @@
-# Container image for the listing automation prototype: the FastAPI backend serving the admin panel pages.
+# Container image for the listing automation backend: the FastAPI API, which also serves a mounted frontend checkout.
 FROM python:3.14-slim
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
@@ -10,11 +10,10 @@ RUN apt-get update \
 
 WORKDIR /srv/backend
 
-COPY backend/requirements.txt .
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY backend/ /srv/backend/
-COPY frontend/ /srv/frontend/
+COPY . .
 
 EXPOSE 4000
 
